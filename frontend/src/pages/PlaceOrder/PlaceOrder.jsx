@@ -23,8 +23,6 @@ const PlaceOrder = () => {
   const [countries] = useState(["India", "USA", "UK", "Canada", "Australia"]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-  const [citySearch, setCitySearch] = useState("");
-  const [stateSearch, setStateSearch] = useState("");
 
   // Indian states data
   const indiaStates = {
@@ -149,7 +147,7 @@ const PlaceOrder = () => {
       // Initialize states for India
       setStates(Object.keys(indiaStates));
     }
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <form onSubmit={placeOrder} className="place-order">

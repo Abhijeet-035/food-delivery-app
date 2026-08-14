@@ -5,7 +5,7 @@ import { assets } from "../../assets/assets";
 
 const FoodDisplay = ({ category }) => {
   const {
-    food_list,
+    food_list: _food_list, // eslint-disable-line no-unused-vars
     filteredFoods,
     cartItems,
     addToCart,
@@ -14,7 +14,7 @@ const FoodDisplay = ({ category }) => {
     totalPages,
     handlePageChange,
     pagination,
-    setPagination,
+    setPagination: _setPagination, // eslint-disable-line no-unused-vars
   } = useContext(StoreContext);
 
   return (

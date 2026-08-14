@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./AboutUs.css";
-import { assets } from "../../assets/assets";
 
 const AboutUs = () => {
   useEffect(() => {

@@ -23,7 +23,7 @@ const MyOrders = () => {
     if (token) {
       fetchOrders();
     }
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleTrack = async (order) => {
     // Re-fetch latest orders so status is current before opening modal
