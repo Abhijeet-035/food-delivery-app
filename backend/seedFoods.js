@@ -59,14 +59,14 @@ const seedFoods = async () => {
         description: "Grilled chicken breast on toasted bread with mayo",
         price: 240,
         category: "Sandwich",
-        image: "https://images.unsplash.com/photo-1585238341710-4b4e6ceaf1b8?w=400&h=400&fit=crop",
+        image: "https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&h=400&fit=crop",
       },
       {
         name: "Veggie Sandwich",
         description: "Fresh vegetables and hummus on whole wheat bread",
         price: 200,
         category: "Sandwich",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop",
+        image: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=400&fit=crop",
       },
       {
         name: "Chocolate Cake",

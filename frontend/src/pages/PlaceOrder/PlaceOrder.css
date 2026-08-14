@@ -3,31 +3,43 @@
   justify-content: space-between;
   align-items: start;
   gap: 50px;
-  margin-top: 100px;
+  margin-top: 80px;
 }
+
+/* ── Left: delivery info form ── */
 .place-order-left {
-  width: 100%;
-  max-width: max(30%, 500px);
+  flex: 1;
+  min-width: 0;
 }
+
 .place-order-left .title {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 600;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
+  color: #222;
 }
+
 .place-order-left input,
 .place-order-left select {
-  margin-top: 15px;
+  margin-top: 14px;
   width: 100%;
-  padding: 10px;
+  padding: 11px 12px;
   border: 1px solid #c5c5c5;
   border-radius: 4px;
   outline-color: tomato;
   font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.place-order-left input:focus,
+.place-order-left select:focus {
+  border-color: tomato;
 }
 
 .place-order-left select {
   cursor: pointer;
   background-color: white;
+  appearance: auto;
 }
 
 .place-order-left select:hover {
@@ -36,24 +48,25 @@
 
 .place-order-left .multi-fields {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
+/* ── Payment methods ── */
 .payment-methods {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .payment-option {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 10px;
+  padding: 12px 14px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .payment-option:hover {
@@ -64,8 +77,9 @@
 .payment-option input[type="radio"] {
   margin-right: 10px;
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
+  accent-color: tomato;
 }
 
 .payment-option span {
@@ -73,10 +87,106 @@
   font-weight: 500;
 }
 
+/* ── Right: cart summary ── */
 .place-order-right {
-  width: 100%;
-  max-width: max(40%, 500px);
+  flex: 0 0 360px;
+  max-width: 400px;
+  position: sticky;
+  top: 90px;
 }
+
+.place-order .cart-total {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.place-order .cart-total h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.place-order .cart-total-details {
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+  font-size: 15px;
+}
+
+.place-order .cart-total hr {
+  margin: 8px 0;
+  height: 1px;
+  background-color: #e2e2e2;
+  border: none;
+}
+
 .place-order .cart-total button {
-  margin-top: 25px;
+  margin-top: 20px;
+  border: none;
+  color: white;
+  background-color: tomato;
+  width: 100%;
+  padding: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.place-order .cart-total button:hover {
+  background-color: rgb(220, 60, 30);
+}
+
+/* ══════════════════════════════
+   RESPONSIVE BREAKPOINTS
+══════════════════════════════ */
+
+@media (max-width: 900px) {
+  .place-order {
+    gap: 30px;
+  }
+  .place-order-right {
+    flex: 0 0 280px;
+  }
+}
+
+/* Stack form above cart summary on tablet/mobile */
+@media (max-width: 750px) {
+  .place-order {
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+  }
+  .place-order-left {
+    width: 100%;
+  }
+  .place-order-right {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    position: static;
+  }
+  .place-order-left .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .place-order-left .multi-fields {
+    flex-direction: column;
+    gap: 0;
+  }
+  .place-order-left input,
+  .place-order-left select {
+    font-size: 13px;
+    padding: 10px 11px;
+  }
+  .place-order-left .title {
+    font-size: 22px;
+  }
+  .payment-option span {
+    font-size: 13px;
+  }
 }

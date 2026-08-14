@@ -31,6 +31,11 @@ const FoodDisplay = ({ category }) => {
                   className="food-items-image"
                   src={item.image}
                   alt={item.name || "Food item"}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop";
+                  }}
                 />
                 {!cartItems || !cartItems[item._id] ? (
                   <img

@@ -1,27 +1,99 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
-* {
+
+/* ── Reset & base ── */
+*,
+*::before,
+*::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Outfit";
+  font-family: "Outfit", sans-serif;
   scroll-behavior: smooth;
 }
+
 body {
   min-height: 100vh;
+  /* Prevent horizontal scroll on any device */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%; /* stop iOS auto font-size bumping */
 }
+
 a {
-  text-align: none;
+  text-decoration: none;
   color: inherit;
 }
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* ── App wrapper ──
+   90% on desktop, tighter padding on small screens */
 .app {
   width: 90%;
   margin: auto;
 }
+
+/* ── Fade-in animation (used across components) ── */
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Utility: visually hide but keep accessible ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ══════════════════════════════
+   GLOBAL RESPONSIVE BREAKPOINTS
+   These govern the .app container
+   width so all pages scale together
+══════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 1050px) {
+  .app {
+    width: 92%;
   }
-  100% {
-    opacity: 100;
+}
+
+/* Large phone */
+@media (max-width: 750px) {
+  .app {
+    width: 94%;
+  }
+}
+
+/* Small phone */
+@media (max-width: 480px) {
+  .app {
+    width: 96%;
+  }
+}
+
+/* Very small phone */
+@media (max-width: 360px) {
+  .app {
+    width: 98%;
   }
 }

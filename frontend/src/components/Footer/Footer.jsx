@@ -1,44 +1,124 @@
 import React from "react";
 import "./Footer.css";
 import { assets } from "../../assets/assets";
+import { Link, useNavigate } from "react-router-dom";
+
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleViewMenu = () => {
+    navigate("/");
+    setTimeout(() => {
+      const el = document.getElementById("food-display");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
   return (
     <div className="footer" id="footer">
       <div className="footer-content">
+        {/* ── Left ── */}
         <div className="footer-content-left">
-          <img alt=" " src={assets.logo} />
+          <img alt="Tomato logo" src={assets.logo} />
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Craving something delicious? Explore a variety of tasty dishes from
+            local restaurants, place your order in just a few clicks, and enjoy
+            fresh meals delivered straight to your door.
           </p>
-          <div className="footer-social-icons">
-            <img src={assets.facebook_icon} alt="" />
-            <img src={assets.twitter_icon} alt="" />
-            <img src={assets.linkedin_icon} alt="" />
-          </div>
         </div>
+
+        {/* ── Center ── */}
         <div className="footer-content-center">
           <h2>COMPANY</h2>
           <ul>
-            <li>Home</li>
-            <li>About us</li>
-            <li>Delivery</li>
-            <li>Privacy policy</li>
+            <li>
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/about-us">About us</Link>
+            </li>
+            <li>
+              <span className="footer-link" onClick={handleViewMenu}>
+                View Menu
+              </span>
+            </li>
+            <li>
+              <Link to="/privacy-policy">Privacy policy</Link>
+            </li>
           </ul>
         </div>
+
+        {/* ── Right ── */}
         <div className="footer-content-right">
           <h2>GET IN TOUCH</h2>
           <ul>
-            <li></li>
+            <li>
+              <a href="mailto:hello@tomatoapp.com">hello@tomatoapp.com</a>
+            </li>
+            <li>+91 98765 43210</li>
           </ul>
+
+          {/* Social icons moved here, under GET IN TOUCH */}
+          <div className="footer-social-icons">
+            {/* GitHub */}
+            <a
+              href="https://github.com/Abhijeet-035"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="white">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
+                  0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755
+                  -1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305
+                  3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38
+                  1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399
+                  3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24
+                  2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81
+                  1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795
+                  24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </a>
+
+            {/* Twitter / X */}
+            <a
+              href="https://x.com/Abhijeet18k"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter / X"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="white">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401
+                  6.231H2.744l7.736-8.835L2.25 2.25h6.865l4.258 5.63 4.871-5.63zm-1.161
+                  17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+              </svg>
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/in/abhijeet-kumar35/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="white">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
+                  0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
+                  1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
+                  7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063
+                  2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0
+                  0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24
+                  24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
-      <hr></hr>
-      <p className="footer-copyright">
-        Copyright 2024 © -All Rights Reserved
-      </p>
+
+      <hr />
+      <p className="footer-copyright">Copyright 2024 © Tomato — All Rights Reserved</p>
     </div>
   );
 };

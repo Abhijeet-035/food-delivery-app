@@ -5,16 +5,17 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: 20px 8vw;
-  padding-left: 80px;
+  padding: 40px 8vw;
   margin-top: 100px;
 }
+
 .footer-content {
   width: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 80px;
 }
+
 .footer-content-left,
 .footer-content-center,
 .footer-content-right {
@@ -23,36 +24,139 @@
   align-items: start;
   gap: 20px;
 }
+
+.footer-content-left p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #b9b9b9;
+}
+
 .footer-content-left li,
 .footer-content-center li,
 .footer-content-right li {
   list-style: none;
   margin-bottom: 10px;
   cursor: pointer;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-content-left li:hover,
+.footer-content-center li:hover,
+.footer-content-right li:hover {
+  color: tomato;
 }
 
 .footer-content-center h2,
 .footer-content-right h2 {
   color: white;
+  font-size: 18px;
 }
-.footer-social-icons img {
-  width: 40px;
-  margin-right: 15px;
+
+.footer-social-icons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
 }
+
+.footer-social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: #4a4a4a;
+  border-radius: 50%;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.footer-social-icons a:hover {
+  background-color: tomato;
+  transform: scale(1.1);
+}
+
+.footer-social-icons svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Clickable footer nav links */
+.footer-link {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.footer-link:hover {
+  color: tomato;
+}
+
+.footer-content-center a,
+.footer-content-right a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+.footer-content-center a:hover,
+.footer-content-right a:hover {
+  color: tomato;
+}
+
+.footer-content-right ul li {
+  font-size: 14px;
+  color: #b9b9b9;
+  cursor: default;
+}
+
 .footer hr {
   width: 100%;
   height: 2px;
-  margin: 20px 0;
+  margin: 10px 0;
   background-color: grey;
   border: none;
 }
+
+.footer-copyright {
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE BREAKPOINTS
+══════════════════════════════ */
+
+@media (max-width: 900px) {
+  .footer-content {
+    gap: 40px;
+  }
+}
+
 @media (max-width: 750px) {
+  .footer {
+    padding: 30px 6vw;
+    margin-top: 70px;
+  }
   .footer-content {
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 30px;
   }
   .footer-copyright {
     text-align: center;
+  }
+  .footer-social-icons img {
+    width: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 24px 5vw;
+  }
+  .footer-content-center h2,
+  .footer-content-right h2 {
+    font-size: 16px;
+  }
+  .footer-social-icons img {
+    width: 30px;
   }
 }
