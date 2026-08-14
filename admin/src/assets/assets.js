@@ -14,4 +14,4 @@ export const assets = {
   parcel_icon,
 };
 
-export const url = "https://food-delivery-website-backend-b6qm.onrender.com";
+export const url = process.env.REACT_APP_API_URL || "http://localhost:4000";

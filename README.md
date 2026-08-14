@@ -1,13 +1,73 @@
-Food Delivery Website A fully functional food delivery application built using the MERN stack. This project demonstrates a complete end-to-end solution, with both user and admin functionalities.
+# Food Delivery Website
 
-Features:
+A full-stack food delivery clone project with separate frontend, admin, and backend apps.
 
-User Authentication:
+## What changed
+- Backend now uses `process.env.MONGO_URI` for MongoDB Atlas or any MongoDB connection string.
+- Frontend and admin now use `REACT_APP_API_URL` for the backend API base URL.
+- Added `.env.example` files for `backend`, `frontend`, and `admin`.
+- Backend CORS is now handled with the `cors` package.
 
-Register and log in with secure authentication using Bcrypt and Validator packages. Food Ordering:
+## Local setup
 
-Browse and add food items to the cart. Place orders by providing address details and completing payment. Integrated payment processing with Stripe (dummy card number for testing: 4000003560000008). Check the status of orders (e.g., processing, out for delivery, delivered). Admin Panel:
+1. Create a MongoDB Atlas cluster or use your own MongoDB URI.
+2. Copy `backend/.env.example` to `backend/.env`.
+3. Set the values in `backend/.env`:
+   - `MONGO_URI`
+   - `JWT_SECRET`
+   - `STRIPE_SECRET_KEY`
+   - `PORT` (optional)
+4. Copy `frontend/.env.example` to `frontend/.env`.
+5. Copy `admin/.env.example` to `admin/.env`.
+6. Set `REACT_APP_API_URL` to your backend URL, for example:
+   - `REACT_APP_API_URL=http://localhost:4000`
+7. Install packages:
+   - `cd backend && npm install`
+   - `cd frontend && npm install`
+   - `cd admin && npm install`
+8. Run locally:
+   - `cd backend && npm start`
+   - `cd frontend && npm start`
+   - `cd admin && npm start`
 
-Separate admin interface to manage food items (add/remove). Oversee and manage user orders, including changing their status. Tech Stack:
+## Deployment guide
 
-Frontend: React.js with React Router DOM for routing and conditional rendering. Backend: Node.js with Express for handling HTTP requests. Database: MongoDB for storing user data and food items. Payment Integration: Stripe (for processing payments). Note: This project is a learning tool and uses a dummy card number for payment processing.
+### 1) GitHub
+- Push the repository to GitHub.
+- Do not commit `.env` files.
+- Keep `.env.example` files for documentation.
+
+### 2) Backend deployment (Render / Railway / Vercel Serverless)
+- Use a free Node host such as Render or Railway for the backend.
+- Set the root directory to `backend`.
+- Set the build command to `npm install`.
+- Set the start command to `node server.js`.
+- Add environment variables in the host dashboard:
+  - `MONGO_URI`
+  - `JWT_SECRET`
+  - `STRIPE_SECRET_KEY`
+  - `PORT` (optional)
+
+### 3) Frontend deployment (Vercel)
+- Create a new Vercel project from GitHub.
+- Choose the `frontend` folder as the project root.
+- Set environment variable:
+  - `REACT_APP_API_URL=<your backend url>`
+- Deploy.
+
+### 4) Admin deployment (Vercel)
+- Create another Vercel project from GitHub.
+- Choose the `admin` folder as the project root.
+- Set the same environment variable:
+  - `REACT_APP_API_URL=<your backend url>`
+- Deploy.
+
+## Notes
+- The database tables/schemas are created automatically by Mongoose when the app writes data.
+- For MongoDB Atlas, whitelist your deployment host IP or enable access from anywhere during testing.
+- For Stripe, set `STRIPE_SECRET_KEY` with your Stripe secret key.
+
+## Useful files
+- `backend/.env.example`
+- `frontend/.env.example`
+- `admin/.env.example`

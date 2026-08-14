@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import multer from "multer";
 import userRouter from "./routes/userRoute.js";
 import foodRouter from "./routes/foodRoute.js";
@@ -12,30 +13,20 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 // Connect to the database
-try {
-  connectDB();
-  console.log("Attempting to connect to MongoDB...");
-} catch (error) {
-  console.error("Failed to connect to MongoDB:", error);
-  console.log("Server will continue to run without database connection");
-}
+connectDB();
+console.log("Attempting to connect to MongoDB...");
 
 // Middleware
 app.use(express.json());
-const allowedOrigins = [
-  "https://food-website-by-arunkumar.onrender.com",
-  "https://admin-food-website.onrender.com",
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:3002"
-];
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
   res.header("Access-Control-Allow-Headers", "token, Content-Type");
-  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 

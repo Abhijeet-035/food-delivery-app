@@ -58,7 +58,7 @@ const Cart = () => {
               <div className="cart-total-details">
                 <b>Total</b>
                 <b>
-                  ₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 10}
+                  ₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 80}
                 </b>
               </div>
             </div>

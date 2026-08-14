@@ -16,13 +16,88 @@ const PlaceOrder = () => {
     city: "",
     state: "",
     zipcode: "",
-    country: "",
+    country: "India",
     phone: "",
+    paymentMethod: "stripe",
   });
+  const [countries] = useState(["India", "USA", "UK", "Canada", "Australia"]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [citySearch, setCitySearch] = useState("");
+  const [stateSearch, setStateSearch] = useState("");
+
+  // Indian states data
+  const indiaStates = {
+    "Andhra Pradesh": ["Hyderabad", "Visakhapatnam", "Vijayawada"],
+    "Arunachal Pradesh": ["Itanagar", "Papum Pare"],
+    Assam: ["Guwahati", "Dibrugarh"],
+    Bihar: ["Patna", "Gaya", "Bhagalpur"],
+    Chhattisgarh: ["Raipur", "Durg"],
+    Goa: ["Panaji", "Margao"],
+    Gujarat: ["Ahmedabad", "Surat", "Vadodara"],
+    Haryana: ["Faridabad", "Gurgaon", "Hisar"],
+    "Himachal Pradesh": ["Shimla", "Mandi"],
+    Jharkhand: ["Ranchi", "Dhanbad"],
+    Karnataka: ["Bangalore", "Mysore", "Mangalore"],
+    Kerala: ["Kochi", "Thiruvananthapuram"],
+    "Madhya Pradesh": ["Indore", "Bhopal"],
+    Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+    Manipur: ["Imphal"],
+    Meghalaya: ["Shillong"],
+    Mizoram: ["Aizawl"],
+    Nagaland: ["Kohima"],
+    Odisha: ["Bhubaneswar", "Cuttack"],
+    Punjab: ["Chandigarh", "Amritsar"],
+    Rajasthan: ["Jaipur", "Jodhpur", "Udaipur"],
+    Sikkim: ["Gangtok"],
+    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+    Telangana: ["Hyderabad", "Warangal"],
+    Tripura: ["Agartala"],
+    "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi"],
+    Uttarakhand: ["Dehradun"],
+    "West Bengal": ["Kolkata", "Darjeeling"],
+  };
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setData((prev) => ({ ...prev, [name]: value }));
+
+    // Auto-update cities when state changes
+    if (name === "state" && data.country === "India") {
+      const citiesList = indiaStates[value] || [];
+      setCities(citiesList);
+      setData((prev) => ({ ...prev, city: "" }));
+    }
+
+    // Auto-update states when country changes
+    if (name === "country") {
+      if (value === "India") {
+        setStates(Object.keys(indiaStates));
+      } else {
+        setStates([]);
+      }
+      setData((prev) => ({ ...prev, state: "", city: "" }));
+      setCities([]);
+    }
+  };
+
+  const handlePincodeChange = (e) => {
+    const pincode = e.target.value;
+    setData((prev) => ({ ...prev, zipcode: pincode }));
+
+    // Auto-fill city and state based on pincode
+    const pincodeMappings = {
+      "560001": { city: "Bangalore", state: "Karnataka" },
+      "400001": { city: "Mumbai", state: "Maharashtra" },
+      "110001": { city: "New Delhi", state: "Delhi" },
+      "700001": { city: "Kolkata", state: "West Bengal" },
+      "600001": { city: "Chennai", state: "Tamil Nadu" },
+    };
+
+    if (pincodeMappings[pincode]) {
+      const { city, state } = pincodeMappings[pincode];
+      setData((prev) => ({ ...prev, city, state }));
+    }
   };
   const placeOrder = async (event) => {
     event.preventDefault();
@@ -38,8 +113,16 @@ const PlaceOrder = () => {
       address: data,
       items: orderItems,
       amount: getTotalCartAmount() + 80,
+      paymentMethod: data.paymentMethod,
     };
     try {
+      // If COD is selected, don't use Stripe
+      if (data.paymentMethod === "cod") {
+        alert("Order placed with Cash on Delivery. You will pay at delivery.");
+        navigate("/myorders");
+        return;
+      }
+
       let response = await axios.post(url + "/api/order/place", orderData, {
         headers: { token },
       });
@@ -62,6 +145,9 @@ const PlaceOrder = () => {
     } else if (getTotalCartAmount() === 0) {
       navigate("/");
       alert("your cart is empty");
+    } else {
+      // Initialize states for India
+      setStates(Object.keys(indiaStates));
     }
   }, [token]);
 
@@ -103,42 +189,53 @@ const PlaceOrder = () => {
           onChange={onChangeHandler}
           required
         />
-        <div className="multi-fields">
-          <input
-            type="text"
-            placeholder="City"
-            name="city"
-            value={data.city}
-            onChange={onChangeHandler}
-            required
-          />
-          <input
-            type="text"
-            placeholder="State"
-            name="state"
-            value={data.state}
-            onChange={onChangeHandler}
-            required
-          />
-        </div>
-        <div className="multi-fields">
-          <input
-            type="text"
-            placeholder="Pin code"
-            name="zipcode"
-            value={data.zipcode}
-            onChange={onChangeHandler}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Country"
-            name="country"
-            value={data.country}
-            onChange={onChangeHandler}
-            required
-          />
-        </div>
+        <input
+          type="text"
+          placeholder="Pin code (e.g., 560001, 400001, 110001)"
+          name="zipcode"
+          value={data.zipcode}
+          onChange={handlePincodeChange}
+          required
+        />
+        <select
+          name="country"
+          value={data.country}
+          onChange={onChangeHandler}
+          required
+        >
+          <option value="">Select Country</option>
+          {countries.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
+        <select
+          name="state"
+          value={data.state}
+          onChange={onChangeHandler}
+          required
+        >
+          <option value="">Select State</option>
+          {states.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+        <select
+          name="city"
+          value={data.city}
+          onChange={onChangeHandler}
+          required
+        >
+          <option value="">Select City</option>
+          {cities.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           placeholder="Phone"
@@ -147,6 +244,41 @@ const PlaceOrder = () => {
           onChange={onChangeHandler}
           required
         />
+        <p className="title" style={{ marginTop: "20px" }}>
+          Payment Method
+        </p>
+        <div className="payment-methods">
+          <label className="payment-option">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="stripe"
+              checked={data.paymentMethod === "stripe"}
+              onChange={onChangeHandler}
+            />
+            <span>💳 Credit/Debit Card (Stripe)</span>
+          </label>
+          <label className="payment-option">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="upi"
+              checked={data.paymentMethod === "upi"}
+              onChange={onChangeHandler}
+            />
+            <span>📱 UPI Payment</span>
+          </label>
+          <label className="payment-option">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="cod"
+              checked={data.paymentMethod === "cod"}
+              onChange={onChangeHandler}
+            />
+            <span>💵 Cash on Delivery (COD)</span>
+          </label>
+        </div>
       </div>
       <div className="place-order-right">
         <div className="cart-total">
