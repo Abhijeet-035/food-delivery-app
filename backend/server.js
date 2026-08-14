@@ -20,7 +20,16 @@ console.log("Attempting to connect to MongoDB...");
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: [
+      // Local development
+      "http://localhost:3000",
+      "http://localhost:3001",
+      // Production — Vercel deployments (update these once you deploy)
+      "https://tomato-frontend.vercel.app",
+      "https://tomato-admin.vercel.app",
+      // Allow any *.vercel.app subdomain for preview deployments
+      /\.vercel\.app$/,
+    ],
     credentials: true,
   })
 );
