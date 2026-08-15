@@ -19,14 +19,21 @@ const Navbar = ({ setShowLogin }) => {
     token,
     setToken,
     searchFoods,
-    allFoodItems,
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
 
-  const handleScroll = () => {
-    setIsShrunk(window.scrollY > 0);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsShrunk(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -42,14 +49,6 @@ const Navbar = ({ setShowLogin }) => {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -69,17 +68,7 @@ const Navbar = ({ setShowLogin }) => {
       return;
     }
 
-    const search = value.trim().toLowerCase();
-
-    const results = allFoodItems.filter((food) => {
-      return (
-        food.name?.toLowerCase().includes(search) ||
-        food.description?.toLowerCase().includes(search) ||
-        food.category?.toLowerCase().includes(search)
-      );
-    });
-
-    searchFoods(value);
+    const results = searchFoods(value);
 
     setShowNoResults(results.length === 0);
 
@@ -303,24 +292,16 @@ const Navbar = ({ setShowLogin }) => {
 
           <a
             href="#app-download"
-            onClick={() =>
-              handleNavClick("Mobile-app")
-            }
-            className={
-              menu === "Mobile-app" ? "active" : ""
-            }
+            onClick={() => handleNavClick("Mobile-app")}
+            className={menu === "Mobile-app" ? "active" : ""}
           >
             Mobile-app
           </a>
 
           <a
             href="#footer"
-            onClick={() =>
-              handleNavClick("Contact us")
-            }
-            className={
-              menu === "Contact us" ? "active" : ""
-            }
+            onClick={() => handleNavClick("Contact us")}
+            className={menu === "Contact us" ? "active" : ""}
           >
             Contact us
           </a>
