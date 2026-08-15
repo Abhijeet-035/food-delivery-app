@@ -10,6 +10,8 @@ const Navbar = ({ setShowLogin }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [showNoResults, setShowNoResults] = useState(false);
+
   const mobileMenuRef = useRef(null);
 
   const {
@@ -17,6 +19,7 @@ const Navbar = ({ setShowLogin }) => {
     token,
     setToken,
     searchFoods,
+    allFoodItems,
   } = useContext(StoreContext);
 
   const navigate = useNavigate();
@@ -57,18 +60,50 @@ const Navbar = ({ setShowLogin }) => {
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
+
     setSearchText(value);
+
+    if (!value.trim()) {
+      setShowNoResults(false);
+      searchFoods("");
+      return;
+    }
+
+    const search = value.trim().toLowerCase();
+
+    const results = allFoodItems.filter((food) => {
+      return (
+        food.name?.toLowerCase().includes(search) ||
+        food.description?.toLowerCase().includes(search) ||
+        food.category?.toLowerCase().includes(search)
+      );
+    });
+
     searchFoods(value);
-    navigate("/");
+
+    setShowNoResults(results.length === 0);
+
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
   };
 
   const handleSearchToggle = () => {
-    setSearchOpen((prev) => !prev);
-
     if (searchOpen) {
+      setSearchOpen(false);
       setSearchText("");
+      setShowNoResults(false);
       searchFoods("");
+    } else {
+      setSearchOpen(true);
     }
+  };
+
+  const handleShowAllFoods = () => {
+    setSearchText("");
+    setShowNoResults(false);
+    searchFoods("");
+    navigate("/");
   };
 
   const logout = () => {
@@ -87,7 +122,10 @@ const Navbar = ({ setShowLogin }) => {
           className="logo"
           src={assets.logo}
           onClick={() =>
-            window.scrollTo({ top: 0, behavior: "smooth" })
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            })
           }
           alt="logo"
         />
@@ -141,18 +179,39 @@ const Navbar = ({ setShowLogin }) => {
 
           <img
             src={assets.search_icon}
-            alt="search"
+            alt="Search"
             onClick={handleSearchToggle}
           />
+
+          {showNoResults && (
+            <div className="search-no-results">
+              <strong>Sorry! Item not available 😔</strong>
+
+              <p>
+                We couldn't find any food matching
+                <br />
+                "{searchText}"
+              </p>
+
+              <button onClick={handleShowAllFoods}>
+                Show all foods
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="navbar-basket_icon">
           <Link to="/cart">
-            <img src={assets.basket_icon} alt="basketimage" />
+            <img
+              src={assets.basket_icon}
+              alt="Shopping cart"
+            />
           </Link>
 
           <div
-            className={getTotalCartAmount() === 0 ? "" : "dot"}
+            className={
+              getTotalCartAmount() === 0 ? "" : "dot"
+            }
           ></div>
         </div>
 
@@ -162,18 +221,27 @@ const Navbar = ({ setShowLogin }) => {
           </button>
         ) : (
           <div className="navbar-profile">
-            <img src={assets.profile_icon} alt="" />
+            <img
+              src={assets.profile_icon}
+              alt="Profile"
+            />
 
             <ul className="navbar-profile-dropdown">
               <li onClick={() => navigate("/myorders")}>
-                <img src={assets.bag_icon} alt="" />
+                <img
+                  src={assets.bag_icon}
+                  alt="Orders"
+                />
                 <p>Orders</p>
               </li>
 
               <hr />
 
               <li onClick={logout}>
-                <img src={assets.logout_icon} alt="" />
+                <img
+                  src={assets.logout_icon}
+                  alt="Logout"
+                />
                 <p>Logout</p>
               </li>
             </ul>
@@ -214,6 +282,7 @@ const Navbar = ({ setShowLogin }) => {
             to="/"
             onClick={() => {
               handleNavClick("Home");
+
               window.scrollTo({
                 top: 0,
                 behavior: "smooth",
@@ -234,16 +303,24 @@ const Navbar = ({ setShowLogin }) => {
 
           <a
             href="#app-download"
-            onClick={() => handleNavClick("Mobile-app")}
-            className={menu === "Mobile-app" ? "active" : ""}
+            onClick={() =>
+              handleNavClick("Mobile-app")
+            }
+            className={
+              menu === "Mobile-app" ? "active" : ""
+            }
           >
             Mobile-app
           </a>
 
           <a
             href="#footer"
-            onClick={() => handleNavClick("Contact us")}
-            className={menu === "Contact us" ? "active" : ""}
+            onClick={() =>
+              handleNavClick("Contact us")
+            }
+            className={
+              menu === "Contact us" ? "active" : ""
+            }
           >
             Contact us
           </a>
