@@ -1,22 +1,16 @@
 .navbar-search {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative;
-}
-
-.navbar-search > img {
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
 }
 
 .navbar-search input {
-    width: 180px;
-    height: 34px;
+    width: 170px;
+    height: 36px;
     padding: 0 12px;
     border: 1px solid #ccc;
-    border-radius: 18px;
+    border-radius: 6px;
     outline: none;
     font-size: 14px;
     box-sizing: border-box;
@@ -26,36 +20,93 @@
     border-color: tomato;
 }
 
-.search-no-results {
-    width: 100%;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
+.navbar-search > img {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    object-fit: contain;
 }
 
-.search-no-results h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+.search-no-results {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 260px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.search-no-results strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
 }
 
 .search-no-results p {
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.5;
     color: #666;
-    margin-bottom: 20px;
 }
 
 .search-no-results button {
     border: none;
     background: tomato;
     color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 8px 14px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 .search-no-results button:hover {
     opacity: 0.9;
+}
+
+.navbar {
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    width: 150px;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    color: #49557e;
+    font-size: 18px;
+}
+
+.navbar-menu a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar-right img {
+    cursor: pointer;
+}
+
+.navbar-right button {
+    background: transparent;
+    font-size: 16px;
+    color: #49557e;
+    border: 1px solid tomato;
+    padding: 10px 30px;
+    border-radius: 50px;
+    cursor: pointer;
 }
