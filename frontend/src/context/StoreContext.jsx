@@ -223,8 +223,7 @@ const StoreContextProvider = (props) => {
       await listAllFoods();
       await fetchFoodList(1);
 
-      const storedToken =
-        localStorage.getItem("token");
+      const storedToken = localStorage.getItem("token");
 
       if (storedToken) {
         setToken(storedToken);
@@ -233,6 +232,7 @@ const StoreContextProvider = (props) => {
     };
 
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ContextValue = {
