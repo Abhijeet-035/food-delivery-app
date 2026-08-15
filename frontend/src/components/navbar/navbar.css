@@ -110,3 +110,17 @@
     border-radius: 50px;
     cursor: pointer;
 }
+
+.navbar-basket_icon {
+    position: relative;
+}
+
+.navbar-basket_icon .dot {
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: tomato;
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+}

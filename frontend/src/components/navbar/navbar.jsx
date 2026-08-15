@@ -58,23 +58,26 @@ const Navbar = ({ setShowLogin }) => {
   };
 
   const handleSearchChange = (e) => {
-    const value = e.target.value;
+    setSearchText(e.target.value);
+    setShowNoResults(false);
+  };
 
-    setSearchText(value);
+  const performSearch = () => {
+      const value = searchText.trim();
 
-    if (!value.trim()) {
-      setShowNoResults(false);
-      searchFoods("");
-      return;
-    }
+      if (!value) {
+          searchFoods("");
+          setShowNoResults(false);
+          return;
+      }
 
-    const results = searchFoods(value);
+      const results = searchFoods(value);
 
-    setShowNoResults(results.length === 0);
+      setShowNoResults(results.length === 0);
 
-    if (window.location.pathname !== "/") {
-      navigate("/");
-    }
+      if (window.location.pathname !== "/") {
+          navigate("/");
+      }
   };
 
   const handleSearchToggle = () => {
@@ -151,25 +154,38 @@ const Navbar = ({ setShowLogin }) => {
           className={menu === "Contact us" ? "active" : ""}
         >
           Contact us
+
         </a>
       </ul>
 
       <div className="navbar-right">
         <div className="navbar-search">
           {searchOpen && (
+            
             <input
-              type="text"
-              value={searchText}
-              onChange={handleSearchChange}
-              placeholder="Search food..."
-              autoFocus
+                type="text"
+                value={searchText}
+                onChange={handleSearchChange}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        performSearch();
+                    }
+                }}
+                placeholder="Search food..."
+                autoFocus
             />
           )}
 
           <img
-            src={assets.search_icon}
-            alt="Search"
-            onClick={handleSearchToggle}
+              src={assets.search_icon}
+              alt="Search"
+              onClick={() => {
+                  if (!searchOpen) {
+                      setSearchOpen(true);
+                  } else {
+                      performSearch();
+                  }
+              }}
           />
 
           {showNoResults && (
