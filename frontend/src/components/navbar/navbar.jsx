@@ -25,7 +25,7 @@ const Navbar = ({ setShowLogin }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsShrunk(window.scrollY > 0);
+      setIsShrunk(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -57,36 +57,89 @@ const Navbar = ({ setShowLogin }) => {
     setMobileMenuOpen(false);
   };
 
+  const scrollToFoodDisplay = () => {
+    setTimeout(() => {
+      const foodDisplay = document.getElementById("food-display");
+
+      if (!foodDisplay) {
+        return;
+      }
+
+      const navbarHeight = 80;
+
+      const position =
+        foodDisplay.getBoundingClientRect().top +
+        window.scrollY -
+        navbarHeight;
+
+      window.scrollTo({
+        top: position,
+        behavior: "smooth",
+      });
+    }, 150);
+  };
+
+  const performSearch = () => {
+    const value = searchText.trim();
+
+    if (!value) {
+      searchFoods("");
+      setShowNoResults(false);
+      return;
+    }
+
+    const results = searchFoods(value);
+
+    if (results.length === 0) {
+      setShowNoResults(true);
+      return;
+    }
+
+    setShowNoResults(false);
+
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
+
+    scrollToFoodDisplay();
+  };
+
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
     setShowNoResults(false);
   };
 
-  const performSearch = () => {
-      const value = searchText.trim();
+  const handleSearchToggle = () => {
+    if (!searchOpen) {
+      setSearchOpen(true);
+      return;
+    }
 
-      if (!value) {
-          searchFoods("");
-          setShowNoResults(false);
-          return;
-      }
-
-      const results = searchFoods(value);
-
-      setShowNoResults(results.length === 0);
-
-      if (window.location.pathname !== "/") {
-          navigate("/");
-      }
+    performSearch();
   };
-
-
 
   const handleShowAllFoods = () => {
     setSearchText("");
     setShowNoResults(false);
     searchFoods("");
-    navigate("/");
+
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 100);
+  };
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchText("");
+    setShowNoResults(false);
+    searchFoods("");
   };
 
   const logout = () => {
@@ -145,38 +198,34 @@ const Navbar = ({ setShowLogin }) => {
           className={menu === "Contact us" ? "active" : ""}
         >
           Contact us
-
         </a>
       </ul>
 
       <div className="navbar-right">
         <div className="navbar-search">
           {searchOpen && (
-            
             <input
-                type="text"
-                value={searchText}
-                onChange={handleSearchChange}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        performSearch();
-                    }
-                }}
-                placeholder="Search food..."
-                autoFocus
+              type="text"
+              value={searchText}
+              onChange={handleSearchChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  performSearch();
+                }
+
+                if (e.key === "Escape") {
+                  closeSearch();
+                }
+              }}
+              placeholder="Search food..."
+              autoFocus
             />
           )}
 
           <img
-              src={assets.search_icon}
-              alt="Search"
-              onClick={() => {
-                  if (!searchOpen) {
-                      setSearchOpen(true);
-                  } else {
-                      performSearch();
-                  }
-              }}
+            src={assets.search_icon}
+            alt="Search"
+            onClick={handleSearchToggle}
           />
 
           {showNoResults && (
@@ -212,7 +261,10 @@ const Navbar = ({ setShowLogin }) => {
         </div>
 
         {!token ? (
-          <button onClick={() => setShowLogin(true)}>
+          <button
+            className="signin-button"
+            onClick={() => setShowLogin(true)}
+          >
             Sign in
           </button>
         ) : (
@@ -300,7 +352,9 @@ const Navbar = ({ setShowLogin }) => {
           <a
             href="#app-download"
             onClick={() => handleNavClick("Mobile-app")}
-            className={menu === "Mobile-app" ? "active" : ""}
+            className={
+              menu === "Mobile-app" ? "active" : ""
+            }
           >
             Mobile-app
           </a>
@@ -308,7 +362,9 @@ const Navbar = ({ setShowLogin }) => {
           <a
             href="#footer"
             onClick={() => handleNavClick("Contact us")}
-            className={menu === "Contact us" ? "active" : ""}
+            className={
+              menu === "Contact us" ? "active" : ""
+            }
           >
             Contact us
           </a>

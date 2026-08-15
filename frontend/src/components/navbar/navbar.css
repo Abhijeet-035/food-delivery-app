@@ -1,9 +1,19 @@
 .navbar {
-    padding: 20px 0px;
+    padding: 20px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: white;
+    transition: 0.3s;
+}
+
+.navbar.shrink {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .navbar .logo {
@@ -16,6 +26,8 @@
     gap: 30px;
     color: #49557e;
     font-size: 18px;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar-menu a {
@@ -30,18 +42,71 @@
     gap: 25px;
 }
 
-.navbar-right > img {
-    cursor: pointer;
+.navbar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.navbar-right > button:not(.navbar-hamburger) {
-    background: transparent;
-    font-size: 16px;
-    color: #49557e;
-    border: 1px solid tomato;
-    padding: 10px 30px;
-    border-radius: 50px;
+.navbar-search input {
+    width: 210px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.navbar-search input:focus {
+    border-color: tomato;
+}
+
+.navbar-search > img {
+    width: 25px;
+    height: 25px;
     cursor: pointer;
+    object-fit: contain;
+}
+
+.search-no-results {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 280px;
+    padding: 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    z-index: 3000;
+    box-sizing: border-box;
+}
+
+.search-no-results strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #111;
+    font-size: 17px;
+}
+
+.search-no-results p {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666;
+}
+
+.search-no-results button {
+    border: none;
+    background: tomato;
+    color: white;
+    padding: 9px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .navbar-basket_icon {
@@ -62,116 +127,45 @@
     right: -5px;
 }
 
-
-/* =========================
-   SEARCH
-========================= */
-
-.navbar-search {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.navbar-search input {
-    width: 170px;
-    height: 36px;
-    padding: 0 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.navbar-search input:focus {
-    border-color: tomato;
-}
-
-.navbar-search > img {
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
-    object-fit: contain;
-}
-
-.search-no-results {
-    position: absolute;
-    top: 45px;
-    right: 0;
-    width: 260px;
-    padding: 15px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-}
-
-.search-no-results strong {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-}
-
-.search-no-results p {
-    margin: 0 0 12px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #666;
-}
-
-.search-no-results button {
-    border: none;
-    background: tomato;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 5px;
+.signin-button {
+    background: transparent;
+    font-size: 16px;
+    color: #49557e;
+    border: 1px solid tomato;
+    padding: 10px 30px;
+    border-radius: 50px;
     cursor: pointer;
 }
 
-.search-no-results button:hover {
-    opacity: 0.9;
-}
 
-
-/* =========================
-   PROFILE
-========================= */
+/* PROFILE */
 
 .navbar-profile {
     position: relative;
-    cursor: pointer;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .navbar-profile > img {
     width: 35px;
     height: 35px;
     object-fit: contain;
-    cursor: pointer;
 }
 
 .navbar-profile-dropdown {
     position: absolute;
     right: 0;
     top: 42px;
-
     width: 150px;
     padding: 8px 0;
     margin: 0;
-
     background: white;
     border: 1px solid #ddd;
     border-radius: 5px;
-
     list-style: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-    z-index: 1000;
-
+    z-index: 3000;
     display: none;
 }
 
@@ -183,54 +177,41 @@
     display: flex;
     align-items: center;
     gap: 10px;
-
-    width: 100%;
     padding: 10px 15px;
-
-    box-sizing: border-box;
     cursor: pointer;
 }
 
 .navbar-profile-dropdown li:hover {
-    background-color: #f5f5f5;
+    background: #f5f5f5;
 }
 
 .navbar-profile-dropdown li img {
     width: 20px;
     height: 20px;
-    object-fit: contain;
 }
 
 .navbar-profile-dropdown li p {
     margin: 0;
-    padding: 0;
     font-size: 14px;
-    color: #333;
 }
 
 .navbar-profile-dropdown hr {
-    margin: 5px 10px;
     border: 0;
     border-top: 1px solid #eee;
+    margin: 4px 10px;
 }
 
 
-/* =========================
-   HAMBURGER
-========================= */
+/* HAMBURGER */
 
 .navbar-hamburger {
     display: none;
-
     width: 30px;
     height: 30px;
-
     padding: 0;
-    border: none !important;
-    background: transparent !important;
-
+    border: none;
+    background: transparent;
     cursor: pointer;
-
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -238,62 +219,80 @@
 }
 
 .hamburger-line {
-    display: block;
     width: 25px;
     height: 2px;
-    background-color: #49557e;
-    transition: 0.3s;
-}
-
-.hamburger-line.open:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger-line.open:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger-line.open:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    background: #49557e;
 }
 
 
-/* =========================
-   MOBILE MENU
-========================= */
+/* MOBILE MENU */
 
 .navbar-mobile-menu {
     display: none;
 }
 
 
-/* =========================
-   SHRINK
-========================= */
+/* TABLET */
 
-.navbar.shrink {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .navbar-menu {
-        gap: 15px;
+        gap: 18px;
         font-size: 16px;
     }
 
     .navbar-right {
         gap: 15px;
     }
+
+    .navbar-search input {
+        width: 170px;
+    }
+
+    .signin-button {
+        padding: 8px 20px;
+    }
 }
 
+
+/* MOBILE */
+
 @media (max-width: 750px) {
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .navbar .logo {
+        width: 120px;
+    }
+
     .navbar-menu {
+        display: none;
+    }
+
+    .navbar-right {
+        gap: 12px;
+    }
+
+    .navbar-search input {
+        position: absolute;
+        right: 32px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 160px;
+        height: 35px;
+        background: white;
+    }
+
+    .navbar-search {
+        position: relative;
+    }
+
+    .navbar-search > img {
+        width: 23px;
+        height: 23px;
+    }
+
+    .signin-button {
         display: none;
     }
 
@@ -305,17 +304,13 @@
         position: absolute;
         top: 100%;
         right: 0;
-
         width: 180px;
-
         display: flex;
         flex-direction: column;
-
         background: white;
         border: 1px solid #ddd;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-        z-index: 1000;
+        z-index: 3000;
     }
 
     .navbar-mobile-menu a {
@@ -325,18 +320,42 @@
     }
 
     .navbar-mobile-menu a:hover {
-        background-color: #f5f5f5;
+        background: #f5f5f5;
     }
 
+    .search-no-results {
+        position: fixed;
+        top: 65px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-width: none;
+    }
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 450px) {
     .navbar .logo {
-        width: 120px;
+        width: 100px;
     }
 
     .navbar-right {
-        gap: 15px;
+        gap: 8px;
     }
 
     .navbar-search input {
-        width: 150px;
+        width: 140px;
+        right: 28px;
+    }
+
+    .navbar-basket_icon img {
+        width: 22px;
+    }
+
+    .navbar-profile > img {
+        width: 30px;
+        height: 30px;
     }
 }

@@ -59,6 +59,7 @@ const StoreContextProvider = (props) => {
     if (!searchValue) {
       setSearchPerformed(false);
       setPagination(true);
+      setCurrentPage(1);
       fetchFoodList(1);
       return [];
     }
@@ -67,8 +68,10 @@ const StoreContextProvider = (props) => {
 
     const searchResults = allFoodItems.filter((food) => {
       const name = food.name?.toLowerCase() || "";
-      const description = food.description?.toLowerCase() || "";
-      const category = food.category?.toLowerCase() || "";
+      const description =
+        food.description?.toLowerCase() || "";
+      const category =
+        food.category?.toLowerCase() || "";
 
       return (
         name.includes(searchValue) ||
@@ -79,6 +82,8 @@ const StoreContextProvider = (props) => {
 
     setFilteredFoods(searchResults);
     setPagination(false);
+    setCurrentPage(1);
+    setTotalPages(1);
 
     return searchResults;
   };
@@ -87,6 +92,7 @@ const StoreContextProvider = (props) => {
     setSearchQuery("");
     setSearchPerformed(false);
     setPagination(true);
+    setCurrentPage(1);
     fetchFoodList(1);
   };
 
@@ -104,30 +110,38 @@ const StoreContextProvider = (props) => {
     }
 
     if (token) {
-      await axios.post(
-        url + "/api/cart/add",
-        { itemId },
-        {
-          headers: { token },
-        }
-      );
+      try {
+        await axios.post(
+          url + "/api/cart/add",
+          { itemId },
+          {
+            headers: { token },
+          }
+        );
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+      }
     }
   };
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({
       ...prev,
-      [itemId]: prev[itemId] - 1,
+      [itemId]: Math.max((prev[itemId] || 0) - 1, 0),
     }));
 
     if (token) {
-      await axios.post(
-        url + "/api/cart/remove",
-        { itemId },
-        {
-          headers: { token },
-        }
-      );
+      try {
+        await axios.post(
+          url + "/api/cart/remove",
+          { itemId },
+          {
+            headers: { token },
+          }
+        );
+      } catch (error) {
+        console.error("Error removing item from cart:", error);
+      }
     }
   };
 
@@ -141,7 +155,8 @@ const StoreContextProvider = (props) => {
         );
 
         if (itemInfo) {
-          totalAmount += itemInfo.price * cartItems[item];
+          totalAmount +=
+            itemInfo.price * cartItems[item];
         }
       }
     }
@@ -166,6 +181,8 @@ const StoreContextProvider = (props) => {
         error.response.status === 401 &&
         error.response.data.message === "Token expired"
       ) {
+        localStorage.removeItem("token");
+        setToken("");
         navigate("/");
       }
     }
@@ -175,7 +192,7 @@ const StoreContextProvider = (props) => {
     if (
       newPage > 0 &&
       newPage <= totalPages &&
-      !searchQuery
+      !searchPerformed
     ) {
       fetchFoodList(newPage);
     }
@@ -188,14 +205,17 @@ const StoreContextProvider = (props) => {
     if (category === "All") {
       await fetchFoodList(1);
       setPagination(true);
-    } else {
-      const filtered = allFoodItems.filter(
-        (food) => food.category === category
-      );
-
-      setFilteredFoods(filtered);
-      setPagination(false);
+      return;
     }
+
+    const filtered = allFoodItems.filter(
+      (food) => food.category === category
+    );
+
+    setFilteredFoods(filtered);
+    setPagination(false);
+    setCurrentPage(1);
+    setTotalPages(1);
   };
 
   useEffect(() => {
@@ -203,7 +223,8 @@ const StoreContextProvider = (props) => {
       await listAllFoods();
       await fetchFoodList(1);
 
-      const storedToken = localStorage.getItem("token");
+      const storedToken =
+        localStorage.getItem("token");
 
       if (storedToken) {
         setToken(storedToken);
@@ -212,7 +233,6 @@ const StoreContextProvider = (props) => {
     };
 
     loadData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ContextValue = {
