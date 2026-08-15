@@ -31,14 +31,14 @@ const seedFoods = async () => {
         description: "Crispy rolls filled with vegetables and shrimp",
         price: 200,
         category: "Rolls",
-        image: "https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+        image: "https://images.pexels.com/photos/4001867/pexels-photo-4001867.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
       },
       {
         name: "Chicken Roll",
         description: "Soft tortilla with grilled chicken and vegetables",
         price: 220,
         category: "Rolls",
-        image: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+        image: "https://images.pexels.com/photos/12737661/pexels-photo-12737661.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
       },
       {
         name: "Chocolate Cake",
@@ -87,14 +87,14 @@ const seedFoods = async () => {
         description: "Mixed vegetables in aromatic spiced sauce",
         price: 260,
         category: "Pure Veg",
-        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop",
+        image: "https://images.pexels.com/photos/9609842/pexels-photo-9609842.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
       },
       {
         name: "Paneer Tikka",
         description: "Marinated paneer cheese grilled with vegetables",
         price: 290,
         category: "Pure Veg",
-        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop",
+        image: "https://images.pexels.com/photos/3928854/pexels-photo-3928854.png?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
       },
       {
         name: "Spaghetti Carbonara",
