@@ -80,16 +80,7 @@ const Navbar = ({ setShowLogin }) => {
       }
   };
 
-  const handleSearchToggle = () => {
-    if (searchOpen) {
-      setSearchOpen(false);
-      setSearchText("");
-      setShowNoResults(false);
-      searchFoods("");
-    } else {
-      setSearchOpen(true);
-    }
-  };
+
 
   const handleShowAllFoods = () => {
     setSearchText("");
